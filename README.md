@@ -36,35 +36,35 @@ informations.
         ```
 
 3.  Get coverage and page content
-        ```sh
-        mkdir level_1
-        ./get_coverage.js -wsc  \
-            -e "button.gdpr-lmd-button.gdpr-lmd-button--main" \
-            -p 'https://lemonde.fr' \
-            -o '../level_1' \
-            -l '../data/log/log_level_1' \
-            -f '../data/index.html.urls'
-        ```
+```sh
+mkdir level_1
+./get_coverage.js -wsc  \
+    -e "button.gdpr-lmd-button.gdpr-lmd-button--main" \
+    -p 'https://lemonde.fr' \
+    -o '../level_1' \
+    -l '../data/log/log_level_1' \
+    -f '../data/index.html.urls'
+```
 
 4.  Get urls out by calling:
-        ```sh
-        ./extract_urls.sh level_1/* # Generates an .urls file for each file
-        ```
+```sh
+./extract_urls.sh level_1/* # Generates an .urls file for each file
+```
 
 5.  Generate level_1_urls  (this is not the real script, see in run_get_coverage.sh)
-        ```sh
-        cat level_1/*.urls | 
-        sort -u | 
-        # remove urls with rules in reject_urls
-        grep -vf reject_urls | 
+```sh
+cat level_1/*.urls | 
+sort -u | 
+# remove urls with rules in reject_urls
+grep -vf reject_urls | 
 
-        # Get only new urls
-        grep -vf index.html.urls > level_1_urls
-        ```
+# Get only new urls
+grep -vf index.html.urls > level_1_urls
+```
 
-        Essentially: 
-            -exclude non-urls patterns (like mailto: ) that we may find in a href attribute
-            -exclude irrelevant urls (mostly repeated ones like /blog/article-1, blog/article-2)
+    Essentially: 
+        -exclude non-urls patterns (like mailto: ) that we may find in a href attribute
+        -exclude irrelevant urls (mostly repeated ones like /blog/article-1, blog/article-2)
 
 6. Validate manually:
 
