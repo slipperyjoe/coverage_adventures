@@ -1,5 +1,4 @@
 # Coverage adventures
----
 
 Collection of scripts to crawl websites and aggegrate coverage data.
 See this [article](https://slipperyjoe.xyz/articles/css_coverage_adventures.html) for detailed explanations.
@@ -10,7 +9,6 @@ get_coverage.js and extract_urls.sh. See the notes inside the scripts for more
 informations. 
 
 ## Automatic version:
----
 
 1.  Choose website entry point (ex: the landing page) and dowload the html document
     wget / curl / puppeteer to download index.html
@@ -28,7 +26,6 @@ informations.
     rinse and repeat until no new urls are found
     
 ## Manual version:
----
 
 1.  Choose website entry point (ex: index.html) and dowload page
     wget / curl / puppeteer to download index.html
@@ -80,7 +77,6 @@ informations.
 
 
 ## Analysis
----
 
 The analysis step is done separately with the script concat_ranges.sh. That way
 you can easily recrawl parts of the website, exclude certain pages, only
