@@ -65,7 +65,7 @@ cat "$INPUT_FILE" | jq -r '
 
 awk '{sum+=$1}END{print sum}' |
 {
-    read  TOTAL 
+    read -r TOTAL 
 #    TOTAL=$(awk '{sum+=$1}END{print sum}' res)
     ## get percentage
     cat "$temp_1" | sort -k 2 | awk '{ 
@@ -93,4 +93,4 @@ awk '{sum+=$1}END{print sum}' |
 # sum = (sum+$1)
 
 # cleanup
-rm  $temp_1
+rm  "$temp_1"

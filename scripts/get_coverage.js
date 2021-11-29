@@ -31,9 +31,6 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 const yargs = require("yargs");
-//const split = require('split');
-//const through = require('through');
-
 
 const options = yargs
     .usage(` Usage: $0 [OPTIONS]... [URL_FILE] `)
@@ -57,16 +54,14 @@ const options = yargs
     })
     .argv;
 
-//  CHECKS AND INITIALIZATIONS
-// ----------------------------------------------------------------------------
 
-// variables declarations
 let coverage_report_path
 let css_coverage
 let current_url
 let page_content_path
 var URL_TO_CHECK 
 var CURRENT_STATUS = 0
+
 // read urls from input file
 // ./script.js -f input_file
 if(options.file){
@@ -97,12 +92,6 @@ if ( !URL_TO_CHECK.length ){
     process.exit(1) 
 }
 
-
-
-
-// MAIN FUNCTION
-// ----------------------------------------------------------------------------
-
 async function get_formatted_url(){
 
     const browser = await puppeteer.launch({
@@ -121,7 +110,7 @@ async function get_formatted_url(){
     // MAIN FOR LOOP
     for( let index=0; index < URL_TO_CHECK.length; index++){
 
-        // define current out file path: prepent sanitized output dir 
+        // define current out file path: prepend sanitized output dir 
         page_content_path = options.outdir.replace(/\/$/,'') +"/"+ URL_TO_CHECK[index].replace(/\//g,":::");
 
         // define current url 
@@ -140,8 +129,6 @@ async function get_formatted_url(){
         }
 
         // try to navigat to url, log error and continue
-//        if (URL_TO_CHECK[index]) {
-
             try {
                 await page.goto( current_url, {
                     waitUntil: 'networkidle2',
@@ -158,7 +145,6 @@ async function get_formatted_url(){
         // condition on status here
         if (CURRENT_STATUS === 0){
 
-// ---------------       
             // if element is set, click on it and wait 3 s
             if( options.element ){
                 await page.evaluate((elem) => {
@@ -170,7 +156,6 @@ async function get_formatted_url(){
                 await page.waitForTimeout(3000);
             }
 
-// ---------------       
             // scroll to bottom of page if option set
             if (options.scroll) {
                 await page.evaluate( () => {
@@ -183,7 +168,6 @@ async function get_formatted_url(){
                 await page.waitForTimeout(3000);
             }
 
-// ---------------       
             // stop and write css coverage
             if( options.coverage ){
                 css_coverage = await page.coverage.stopCSSCoverage();
@@ -199,7 +183,7 @@ async function get_formatted_url(){
                     }
                 })
             }
-// ---------------       
+
             // write page content to file if option is set
             if ( options.write ){
                 const html = await page.content();
@@ -208,7 +192,6 @@ async function get_formatted_url(){
         } // end of status IF
 
 
-// ------------- move to try catch
         // log success for that url if option is set 
         if ( options.log ){
             //fs.appendFile(options.log, "0    "+current_url+"\n", function (err) {
@@ -218,14 +201,11 @@ async function get_formatted_url(){
                 (err) => console.error(err) )
         }
         
-// ------------- reset for next loop iteration
-
+        // reset for next loop iteration
         if (options.coverage && CURRENT_STATUS === 1){
             await page.coverage.stopCSSCoverage();
-
         }
         CURRENT_STATUS = 0;
-
 
     } // END OF MAIN FOR LOOP 
 

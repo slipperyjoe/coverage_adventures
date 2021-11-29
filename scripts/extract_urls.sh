@@ -56,7 +56,7 @@ echo "$*" |
 tr ' ' '\n' |
 grep -Ev "\.(urls|coverage)$" |
 
-while read i
+while read -r i
     do
 
         echo "$i"

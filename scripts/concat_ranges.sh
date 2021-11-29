@@ -103,12 +103,12 @@ fi |
 # aleready have is saved up somewhere
 
 
-while read LOCAL_URL
+while read -r LOCAL_URL
 do
 
 #    echo $LOCAL_URL
         
-    QUERY_URL=$(echo $LOCAL_URL | sed -r 's/^\//'"$PREFIX"'\//')
+    QUERY_URL=$(echo "$LOCAL_URL" | sed -r 's/^\//'"$PREFIX"'\//')
 
 		temp_file=$(mktemp)
 
@@ -124,8 +124,7 @@ do
 		TOTAL_BYTES=$(wc -c "$temp_file" | cut -d" " -f 1)
 
 		# read files given in as arguments
-		cat $* |
-
+		cat "$@" |
 
 		# select only ranges that correspond to the url
 		jq -r '.[] | 
